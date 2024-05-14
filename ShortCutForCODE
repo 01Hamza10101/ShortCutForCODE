@@ -1,0 +1,10 @@
+vs code connect with github acc and push data 
+
+git config --global user.email "yournew@email.com" (Optional)
+git config --global user.name "yournewgoodname" (Optional)
+git init
+git branch main (Optional, consider using main if your project follows that convention)
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/username/nameoffile
+git push -u origin main
