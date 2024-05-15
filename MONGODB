@@ -1,0 +1,69 @@
+Here is code to connect react to mongodb 
+
+const { MongoClient } = require('mongodb');
+
+// Connection URI
+const uri = 'mongodb://localhost:27017';
+
+// Create a new MongoClient
+const client = new MongoClient(uri);
+
+async function main() {
+  try {
+    // Connect the client to the server
+    await client.connect();
+    console.log('Connected to MongoDB');
+    
+    // Your code for storing data in GridFS will go here
+
+  } finally {
+    // Close the connection when done
+    await client.close();
+    console.log('Disconnected from MongoDB');
+  }
+}
+
+main().catch(console.error);
+
+
+
+
+Here is code to upload img file's in mongodb 
+
+// Access the database
+const database = client.db('mydatabase');
+
+// Access the GridFS bucket
+const bucket = new mongodb.GridFSBucket(database);
+
+// Define the path to the file you want to store
+const filePath = '/path/to/your/file.jpg';
+
+// Create a readable stream from the file
+const readableStream = fs.createReadStream(filePath);
+
+// Create an upload stream to store the file in GridFS
+const uploadStream = bucket.openUploadStream('file.jpg');
+
+// Pipe the data from the readable stream to the upload stream
+readableStream.pipe(uploadStream);
+
+// Handle events (optional)
+uploadStream.on('error', (error) => {
+  console.error('Error uploading file:', error);
+});
+
+uploadStream.on('finish', () => {
+  console.log('File uploaded successfully');
+});
+
+//Clean up 
+// Handle errors
+uploadStream.on('error', (error) => {
+  console.error('Error uploading file:', error);
+});
+
+// Close the MongoDB client connection
+await client.close();
+
+
