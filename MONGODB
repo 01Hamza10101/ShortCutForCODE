@@ -67,3 +67,168 @@ uploadStream.on('error', (error) => {
 await client.close();
 
 
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const ImageUpload = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+    formData.append('title', title);
+    formData.append('description', description);
+
+    try {
+      const response = await axios.post('http://localhost:5000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error uploading the image:', error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="file" onChange={handleFileChange} required />
+      <input type="text" value={title} onChange={handleTitleChange} placeholder="Title" required />
+      <textarea value={description} onChange={handleDescriptionChange} placeholder="Description" required />
+      <button type="submit">Upload</button>
+    </form>
+  );
+};
+
+export default ImageUpload;
+
+
+
+npm install express multer mongoose gridfs-stream
+
+
+
+
+
+
+const express = require('express');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const bodyParser = require('body-parser');
+const app = express();
+const path = require('path');
+const crypto = require('crypto');
+
+// Middleware
+app.use(bodyParser.json());
+
+// Mongo URI
+const mongoURI = 'mongodb://localhost:27017/yourdatabase';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Init gfs
+let gfs;
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+
+const upload = multer({ storage });
+
+// Image Schema
+const ImageSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  imageId: String,
+});
+
+const Image = mongoose.model('Image', ImageSchema);
+
+app.post('/upload', upload.single('image'), async (req, res) => {
+  try {
+    const newImage = new Image({
+      title: req.body.title,
+      description: req.body.description,
+      imageId: req.file.id,
+    });
+
+    await newImage.save();
+
+    res.send({ message: 'File uploaded and data saved successfully', data: newImage });
+  } catch (error) {
+    res.status(500).send('Error uploading the file and saving data.');
+  }
+});
+
+// Retrieve image
+app.get('/image/:id', async (req, res) => {
+  try {
+    const file = await gfs.files.findOne({ _id: mongoose.Types.ObjectId(req.params.id) });
+    if (!file || file.length === 0) {
+      return res.status(404).json({ err: 'No file exists' });
+    }
+
+    const readstream = gfs.createReadStream(file.filename);
+    readstream.pipe(res);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.listen(5000, () => {
+  console.log('Server started on port 5000');
+});
+
