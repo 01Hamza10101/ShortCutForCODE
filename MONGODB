@@ -1,3 +1,40 @@
+Here is use command 
+To install MongoDB server on your Kali Linux system, you can follow these steps:
+
+1. **Update Package Lists**: It's a good practice to update your package lists to ensure you're installing the latest versions of software. Run the following command:
+   ```
+   sudo apt-get update
+   ```
+
+2. **Install MongoDB**: Once your package lists are updated, you can install MongoDB by running:
+   ```
+   sudo apt-get install mongodb
+   ```
+
+3. **Start MongoDB Service**: After the installation is complete, MongoDB should start automatically. If it doesn't, you can start the MongoDB service manually with:
+   ```
+   sudo service mongodb start
+   ```
+
+4. **Verify MongoDB Installation**: You can verify that MongoDB is installed and running correctly by checking its status:
+   ```
+   sudo service mongodb status
+   ```
+
+5. **Enable MongoDB Service (Optional)**: If you want MongoDB to start automatically at boot, you can enable the service with:
+   ```
+   sudo systemctl enable mongodb
+   ```
+
+6. **Test MongoDB Connection**: You can also test the MongoDB server by connecting to it using the MongoDB shell:
+   ```
+   mongo
+   ```
+   This command will launch the MongoDB shell. If it connects successfully, you'll see the MongoDB shell prompt.
+
+Once you've completed these steps, MongoDB server should be installed and running on your Kali Linux system. You can then connect to it using MongoDB Compass or any other MongoDB client.
+
+
 Here is code to connect react to mongodb 
 
 const { MongoClient } = require('mongodb');
