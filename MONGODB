@@ -31,6 +31,7 @@ To install MongoDB server on your Kali Linux system, you can follow these steps:
    mongo
    ```
    This command will launch the MongoDB shell. If it connects successfully, you'll see the MongoDB shell prompt.
+7.  sudo ufw allow 27017 in write this command in terminal :
 
 Once you've completed these steps, MongoDB server should be installed and running on your Kali Linux system. You can then connect to it using MongoDB Compass or any other MongoDB client.
 
