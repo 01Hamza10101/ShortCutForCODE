@@ -43,6 +43,9 @@ const { MongoClient } = require('mongodb');
 // Connection URI
 const uri = 'mongodb://localhost:27017';
 
+const uri = 'mongodb+srv://new_userEcommer1234:<password>@cluster0.kblhpgg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+// to get password of mongodb atlas click db access then click add new data base user or edit 
+
 // Create a new MongoClient
 const client = new MongoClient(uri);
 
