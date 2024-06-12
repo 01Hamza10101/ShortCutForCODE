@@ -1,0 +1,121 @@
+npm install firebase-admin
+
+
+const admin = require('firebase-admin');
+
+// Replace with your Firebase project's service account key file path
+const serviceAccount = require('./path/to/serviceAccountKey.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://<your-firebase-project-id>.firebaseio.com' // Optional, but recommended
+});
+
+
+const admin = require('firebase-admin');
+const serviceAccount = require('./path/to/serviceAccountKey.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://<your-firebase-project-id>.firebaseio.com'
+});
+
+const db = admin.firestore();
+
+async function readData() {
+  try {
+    const snapshot = await db.collection('users').doc('user1').get();
+    if (snapshot.exists) {
+      const data = snapshot.data();
+      console.log('User data:', data);
+    } else {
+      console.log('No such document!');
+    }
+  } catch (error) {
+    console.error('Error getting document:', error);
+  }
+}
+
+readData();
+
+
+const admin = require('firebase-admin');
+const serviceAccount = require('./path/to/serviceAccountKey.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://<your-firebase-project-id>.firebaseio.com'
+});
+
+const db = admin.firestore();
+
+async function writeData() {
+  try {
+    const docRef = db.collection('users').doc('user2');
+    await docRef.set({
+      name: 'John Doe',
+      age: 30,
+      city: 'New York'
+    });
+    console.log('Document written with ID:', docRef.id);
+  } catch (error) {
+    console.error('Error writing document:', error);
+  }
+}
+
+writeData();
+
+
+
+
+const admin = require('firebase-admin');
+const serviceAccount = require('./path/to/serviceAccountKey.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: '<your-storage-bucket-name>.appspot.com' // Replace with your bucket name
+});
+
+const bucket = admin.storage().bucket();
+
+
+const fs = require('fs'); // For file system access
+
+async function uploadImage(filePath, fileName) {
+  try {
+    const file = fs.readFileSync(filePath);
+    const fileStream = fs.createReadStream(filePath);
+
+    const [fileMetadata] = await bucket.upload(fileStream, {
+      destination: fileName,
+      metadata: {
+        contentType: 'image/jpeg' // Adjust based on your image type
+      }
+    });
+
+    console.log(`File uploaded to ${fileMetadata.name}`);
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
+}
+
+// Example usage:
+uploadImage('./path/to/your/image.jpg', 'my-image.jpg');
+
+
+async function downloadImage(fileName, destinationPath) {
+  try {
+    const file = bucket.file(fileName);
+    const [data] = await file.download();
+
+    fs.writeFileSync(destinationPath, data);
+    console.log(`File downloaded to ${destinationPath}`);
+  } catch (error) {
+    console.error('Error downloading file:', error);
+  }
+}
+
+// Example usage:
+downloadImage('my-image.jpg', './path/to/download/location/my-image.jpg');
+
+
