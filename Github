@@ -8,3 +8,14 @@ git add .
 git commit -m "Initial commit"
 git remote add origin https://github.com/username/nameoffile
 git push -u origin main
+
+
+
+
+echo "# PixelEarn" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/01Hamza10101/PixelEarn.git
+git push -u origin main
