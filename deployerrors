@@ -1,0 +1,34 @@
+deploy vercel 
+
+env issues i faced 
+use 
+
+VERCEL_NODE_ENV
+
+VERCEL_NEXTAUTH_URL
+
+VERCEL_GOOGLE_CLIENT_SECRET
+
+VERCEL_GOOGLE_CLIENT_ID
+
+VERCEL_NEXTAUTH_SECRET
+
+VERCEL_MONGODB_URI
+
+VERCEL_DB_NAME
+
+now you can use 
+
+process.env.VERCEL_NEXTAUTH_SECRET
+
+dont add , or ' like this add like this &apos; chekout more error logs funcation 
+
+//vercel completed...
+
+deploy netlify
+
+i did'nt faced any issue like vercel 
+its normal like localhost but you have to add setting for check if mongodb try to connect multiple times it shows error 
+add options for if alreaday connected if dosen't connect ones more 
+
+//netlify completed...
