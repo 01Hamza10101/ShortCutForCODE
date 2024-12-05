@@ -1,0 +1,5 @@
+//Install React-Native
+
+npx create-expo-app [ProjectName] --template blank 
+
+npm start
