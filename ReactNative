@@ -3,3 +3,10 @@
 npx create-expo-app [ProjectName] --template blank 
 
 npm start
+
+//for full setup
+
+https://www.youtube.com/watch?v=3LVwTukzFu8&list=PL8p2I9GklV468O2wk-n8Q1KmtMhnHHj4C&index=3
+npx @react-native-community/cli init  
+
+// use this for full control on project 
