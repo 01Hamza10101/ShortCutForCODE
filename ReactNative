@@ -12,3 +12,7 @@ npx @react-native-community/cli init
 // use this for full control on project 
 // add tailwind css or nativewind 
 https://youtu.be/qmB6QCua3Uk?si=lxbo_OMw0411Q9Kx
+
+// to build apk release.apk
+cd android
+./gradlew assembleRelease
