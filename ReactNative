@@ -16,3 +16,6 @@ https://youtu.be/qmB6QCua3Uk?si=lxbo_OMw0411Q9Kx
 // to build apk release.apk
 cd android
 ./gradlew assembleRelease
+
+// in react native SignIn with google 
+https://peerlist.io/blog/engineering/implementing-google-signin-in-react-native 
