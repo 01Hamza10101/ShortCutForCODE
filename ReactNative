@@ -10,14 +10,14 @@ eas build --platform android
 // to build abb file on expo web app if you want direct apk you can get command for apk 
 
 to convert from .abb file to apk
-java -jar bundletool-all-1.18.1.jar build-apks `
---bundle="application-018aafb6-28d6-41d3-8fe3-f4fe7cba0fe2.aab" `
---output="my-multi-charts-app.apks" `
---mode=universal `
---ks="@hanzla0001__multi_charts-keystore.bak.jks" `
---ks-pass=pass:abc4eb54473525e6428bb0c42d84ba41 `
---ks-key-alias=c555c05951629bd2c8bb7e4f55389fb6 `
---key-pass=pass:856a913be3428cf9837d0ac1bcc5f540
+java -jar bundletool-all-1.18.1.jar build-apks ^
+  --bundle="application-018aafb6-28d6-41d3-8fe3-f4fe7cba0fe2.aab" ^
+  --output="my-multi-charts-app.apks" ^
+  --mode=universal ^
+  --ks="@hanzla0001__multi_charts-keystore.bak.jks" ^
+  --ks-pass=pass:YOUR_KEYSTORE_PASSWORD ^
+  --ks-key-alias=YOUR_KEY_ALIAS ^
+  --key-pass=pass:YOUR_KEY_PASSWORD
 
 //for full setup
 
