@@ -4,6 +4,10 @@ npx create-expo-app [ProjectName] --template blank
 
 npm start
 
+// you can get apk without expo web app on your android folder 
+1. npm install -g expo-cli    // this command install expo-cli 
+2. npx expo prebuild --platform android  // this command create android and iso folder in expo 
+3. cd android ./gradlew assembleRelease  // this command build apk if no error found  
 
 eas login
 eas build --platform android 
